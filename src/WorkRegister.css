@@ -23,3 +23,20 @@ input {
 label {
     margin-right: 10px;
 }
+
+button {
+    margin-left: 10px;
+    background-color:rgb(236, 172, 172);
+    border-color: rgb(197, 137, 137);;
+}
+
+button:hover {
+    cursor: pointer;
+    background-color:rgb(197, 79, 79);
+    border-color: rgb(240, 203, 203);;
+}
+
+.label {
+    width: 170px;
+    display: inline-block;
+}
