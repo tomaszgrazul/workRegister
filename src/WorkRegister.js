@@ -1,16 +1,68 @@
 import { useState } from "react";
 import './WorkRegister.css';
-// import axios from "axios";
+import axios from "axios";
 import ModalCompanyName from "./Components/ModalCompanyName";
 
 
 const WorkRegister = () => {
 
-    const [OpenModalCompanyName, setOpenModalCompanyName] = useState(false);
+    const [register, setRegister] = useState([{
+        companyName: ''
+    }]);
 
-    // const handleCompanyList = () => {
-    //     console.log('Lista firm');
-    // }
+    const [formData, setFormData] = useState({
+        companyName: ''
+    });
+
+    const [openModalCompanyName, setOpenModalCompanyName] = useState(true);
+
+    const handleInputChange = (e) => {
+        const target = e.target;
+        const name = target.name;
+
+        setFormData ({
+            ...formData,
+            [name]: target.value,
+        });
+    };
+
+    function handleCompanyList() {
+        console.log('Lista firm');
+    }
+
+    const addCompany = (event) => {
+        // event.preventDefault();
+        
+ 
+        let newCompany = {
+            _id: Date.now(),
+            companyName: formData.companyName
+        }
+console.log("newCompany", newCompany);
+        // setRegister(register.concat(newUser));
+
+        setFormData({
+            companyName: ''
+        });
+
+        // axios
+        // .post("http://127.0.0.1:8080/add", newCompany)
+        // .then((res) => {
+         
+        //  })
+        // .catch((error) => {
+        //     console.error(error);
+        // });
+
+        // axios
+        // .post("http://127.0.0.1:8080/read", {id: newCompany._id}) 
+        // .then((res) => { 
+        //     setRegister(register.concat(res.data));      
+        // })
+        // .catch((error) => {
+        //     console.error(error);
+        // });
+    };
 
     return (
         <div className="register-main">
@@ -44,7 +96,14 @@ const WorkRegister = () => {
                     <div className="label">
                         <label htmlFor="nazwaFirmy">Nazwa firmy</label>
                     </div> 
-                    <input type="text" placeholder="" name="nazwaFirmy" />
+                    <input onChange={handleInputChange}  value={formData.companyName} type="text" placeholder="" name="nazwaFirmy" />
+                    <button onClick={(e) => {
+                        e.preventDefault();
+                        addCompany();
+                        
+                        // console.log("newCompany", formData.companyName);
+
+                    }}>Dodaj</button>
                     <button onClick={() => {
                         setOpenModalCompanyName(true);
                     }}>Wybierz</button>
@@ -122,7 +181,7 @@ const WorkRegister = () => {
                 
 
             </form>
-            {OpenModalCompanyName && <ModalCompanyName setModalCompanyName={setOpenModalCompanyName}/>}
+            {openModalCompanyName && <ModalCompanyName setModalCompanyName={setOpenModalCompanyName} handleCompanyList={handleCompanyList}/>}
         </div>
 
     )
