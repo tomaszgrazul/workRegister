@@ -6,27 +6,24 @@ import ModalCompanyName from "./Components/ModalCompanyName";
 
 const WorkRegister = () => {
 
-    const [register, setRegister] = useState([{
-        companyName: ''
-    }]);
+    // const [register, setRegister] = useState([]);
 
-    const [formData, setFormData] = useState({
-        companyName: 'aaa'
-    });
+    // const [formData, setFormData] = useState({
+    //     companyName: 'aaa'
+    // });
 
     const [openModalCompanyName, setOpenModalCompanyName] = useState(false);
     const [companyName, setCompanyName] = useState('');
-    const [setNewCompanyId, newCompanyId] = useState('');
 
-    const handleInputChange = (e) => {
-        const target = e.target;
-        const name = target.name;
+    // const handleInputChange = (e) => {
+    //     const target = e.target;
+    //     const name = target.name;
 
-        setFormData ({
-            ...formData,
-            [name]: target.value
-        });
-    };
+    //     setFormData ({
+    //         ...formData,
+    //         [name]: target.value
+    //     });
+    // };
 
     function handleCompanyList(e) {
         console.log('Lista firm');
@@ -56,21 +53,20 @@ const WorkRegister = () => {
         .catch((error) => {
             console.error(error);
         });
-        setNewCompanyId(newCompany._id);
     };
 
-    const readCompanyList = () => {
+    // const readCompanyList = () => {
 
-        axios
-        .post("http://127.0.0.1:8080/read") 
-        .then((res) => { 
-            // setRegister(register.concat(res.data));  
-            console.log('Lista firm:', res.data);    
-        })
-        .catch((error) => {
-            console.error(error);
-        });
-    }
+    //     axios
+    //     .post("http://127.0.0.1:8080/read") 
+    //     .then((res) => { 
+    //         setRegister(res.data);  
+    //         console.log('Lista firm:', register);    
+    //     })
+    //     .catch((error) => {
+    //         console.error(error);
+    //     });
+    // }
 
     return (
         <div className="register-main">
@@ -187,7 +183,7 @@ const WorkRegister = () => {
                 
 
             </form>
-            {openModalCompanyName && <ModalCompanyName setModalCompanyName={setOpenModalCompanyName} handleCompanyList={handleCompanyList} readCompanyList={readCompanyList}/>}
+            {openModalCompanyName && <ModalCompanyName setModalCompanyName={setOpenModalCompanyName} handleCompanyList={handleCompanyList}/>}
         </div>
 
     )

@@ -1,5 +1,5 @@
 .modalCompanyName {
-    height: 100px;
+    height: 500px;
     width: 300px;
     position: fixed;
     /* left: 100px;
@@ -7,4 +7,28 @@
     top: 40%;
     left: 50%;
     background-color: rgb(221, 175, 175);
+}
+
+.index {
+    width: 30px;
+}
+
+.name {
+    width: 180px;
+}
+
+table {
+    border-collapse: collapse;
+    margin: 50px;
+}
+
+table th{
+    border: 1px solid black;  
+    height: 50px; 
+    background-color: rgb(238, 194, 194);
+}
+
+table td{
+    border: 1px solid black;  
+    height: 50px; 
 }
