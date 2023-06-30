@@ -11,10 +11,12 @@ const WorkRegister = () => {
     }]);
 
     const [formData, setFormData] = useState({
-        companyName: ''
+        companyName: 'aaa'
     });
 
-    const [openModalCompanyName, setOpenModalCompanyName] = useState(true);
+    const [openModalCompanyName, setOpenModalCompanyName] = useState(false);
+    const [companyName, setCompanyName] = useState('');
+    const [setNewCompanyId, newCompanyId] = useState('');
 
     const handleInputChange = (e) => {
         const target = e.target;
@@ -22,47 +24,53 @@ const WorkRegister = () => {
 
         setFormData ({
             ...formData,
-            [name]: target.value,
+            [name]: target.value
         });
     };
 
-    function handleCompanyList() {
+    function handleCompanyList(e) {
         console.log('Lista firm');
+        setCompanyName(e.target.value);
     }
 
-    const addCompany = (event) => {
-        // event.preventDefault();
-        
+    const addCompany = () => {
+       
  
         let newCompany = {
             _id: Date.now(),
-            companyName: formData.companyName
+            companyName: companyName
         }
-console.log("newCompany", newCompany);
-        // setRegister(register.concat(newUser));
+        // console.log("newCompany", newCompany);
+        // setRegister(register.concat(newCompany));
+        // console.log("register", register);
+        // setFormData({
+        //     companyName: ''
+        // });
+        setCompanyName('');
 
-        setFormData({
-            companyName: ''
-        });
-
-        // axios
-        // .post("http://127.0.0.1:8080/add", newCompany)
-        // .then((res) => {
+        axios
+        .post("http://127.0.0.1:8080/add", newCompany)
+        .then((res) => {
          
-        //  })
-        // .catch((error) => {
-        //     console.error(error);
-        // });
-
-        // axios
-        // .post("http://127.0.0.1:8080/read", {id: newCompany._id}) 
-        // .then((res) => { 
-        //     setRegister(register.concat(res.data));      
-        // })
-        // .catch((error) => {
-        //     console.error(error);
-        // });
+         })
+        .catch((error) => {
+            console.error(error);
+        });
+        setNewCompanyId(newCompany._id);
     };
+
+    const readCompanyList = () => {
+
+        axios
+        .post("http://127.0.0.1:8080/read") 
+        .then((res) => { 
+            // setRegister(register.concat(res.data));  
+            console.log('Lista firm:', res.data);    
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+    }
 
     return (
         <div className="register-main">
@@ -94,17 +102,15 @@ console.log("newCompany", newCompany);
 
                 <div>
                     <div className="label">
-                        <label htmlFor="nazwaFirmy">Nazwa firmy</label>
+                        <label htmlFor="companyName">Nazwa firmy</label>
                     </div> 
-                    <input onChange={handleInputChange}  value={formData.companyName} type="text" placeholder="" name="nazwaFirmy" />
+                    <input onChange={handleCompanyList}  value={companyName} type="text" placeholder="" name="companyName" />
                     <button onClick={(e) => {
                         e.preventDefault();
                         addCompany();
-                        
-                        // console.log("newCompany", formData.companyName);
-
                     }}>Dodaj</button>
-                    <button onClick={() => {
+                    <button onClick={(e) => {
+                        e.preventDefault();
                         setOpenModalCompanyName(true);
                     }}>Wybierz</button>
                 </div>
@@ -181,7 +187,7 @@ console.log("newCompany", newCompany);
                 
 
             </form>
-            {openModalCompanyName && <ModalCompanyName setModalCompanyName={setOpenModalCompanyName} handleCompanyList={handleCompanyList}/>}
+            {openModalCompanyName && <ModalCompanyName setModalCompanyName={setOpenModalCompanyName} handleCompanyList={handleCompanyList} readCompanyList={readCompanyList}/>}
         </div>
 
     )

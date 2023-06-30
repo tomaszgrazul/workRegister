@@ -5,7 +5,7 @@ module.exports = {
   
     add: (req, res) => {
            
-        let newUser = new Company(req.body);
+        let newCompany = new Company(req.body);
         
         newCompany
         .save()
@@ -19,8 +19,8 @@ module.exports = {
 
     del: (req, res) => {
 
-        Company.
-        findByIdAndDelete(req.body.id)
+        Company
+        .findByIdAndDelete(req.body.id)
         .then(()=>{
             res.json({ delete: true});
         })
@@ -32,7 +32,8 @@ module.exports = {
     read: (req, res) => {
 
         Company
-        .findById(req.body.id)
+        // .findById(req.body.id)
+        .find(req.body)
         .lean()
         .then((user) => {
             res.json(user);
