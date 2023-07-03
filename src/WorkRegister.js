@@ -6,14 +6,15 @@ import ModalCompanyName from "./Components/ModalCompanyName";
 
 const WorkRegister = () => {
 
-    // const [register, setRegister] = useState([]);
-
     // const [formData, setFormData] = useState({
-    //     companyName: 'aaa'
+    //     companyName: ''
     // });
 
     const [openModalCompanyName, setOpenModalCompanyName] = useState(false);
     const [companyName, setCompanyName] = useState('');
+    const [errors, setErrors] = useState({
+        companyName: ''
+    });
 
     // const handleInputChange = (e) => {
     //     const target = e.target;
@@ -26,8 +27,13 @@ const WorkRegister = () => {
     // };
 
     function handleCompanyList(e) {
-        console.log('Lista firm');
+        
         setCompanyName(e.target.value);
+    }
+
+    const handleAddCompanyName = addCompanyName => {
+        console.log('handleAdd', addCompanyName);
+        setCompanyName(addCompanyName);
     }
 
     const addCompany = () => {
@@ -37,36 +43,28 @@ const WorkRegister = () => {
             _id: Date.now(),
             companyName: companyName
         }
-        // console.log("newCompany", newCompany);
-        // setRegister(register.concat(newCompany));
-        // console.log("register", register);
-        // setFormData({
-        //     companyName: ''
-        // });
+
+        if (newCompany.companyName === '') {    
+            setErrors(() => {
+                return {
+                    companyName: "Wpisz nazwę firmy !!!"
+                };
+            });
+            return;
+        } else setErrors('');
+
         setCompanyName('');
 
         axios
         .post("http://127.0.0.1:8080/add", newCompany)
         .then((res) => {
-         
+            
          })
         .catch((error) => {
             console.error(error);
         });
     };
 
-    // const readCompanyList = () => {
-
-    //     axios
-    //     .post("http://127.0.0.1:8080/read") 
-    //     .then((res) => { 
-    //         setRegister(res.data);  
-    //         console.log('Lista firm:', register);    
-    //     })
-    //     .catch((error) => {
-    //         console.error(error);
-    //     });
-    // }
 
     return (
         <div className="register-main">
@@ -109,6 +107,7 @@ const WorkRegister = () => {
                         e.preventDefault();
                         setOpenModalCompanyName(true);
                     }}>Wybierz</button>
+                    {errors.companyName && <p className="error">{errors.companyName}</p>}
                 </div>
 
                 <div>
@@ -183,7 +182,7 @@ const WorkRegister = () => {
                 
 
             </form>
-            {openModalCompanyName && <ModalCompanyName setModalCompanyName={setOpenModalCompanyName} handleCompanyList={handleCompanyList}/>}
+            {openModalCompanyName && <ModalCompanyName setModalCompanyName={setOpenModalCompanyName} handleCompanyList={handleCompanyList} handleAddCompanyName={handleAddCompanyName}/>}
         </div>
 
     )

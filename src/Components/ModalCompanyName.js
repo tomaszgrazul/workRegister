@@ -2,7 +2,7 @@ import './ModalCompanyName.css'
 import axios from "axios";
 import { useState, useEffect } from "react";
 
-function ModalCompanyName({setModalCompanyName, handleCompanyList}) {
+function ModalCompanyName({setModalCompanyName, handleAddCompanyName}) {
 
     const [register, setRegister] = useState([]);
 
@@ -12,7 +12,7 @@ function ModalCompanyName({setModalCompanyName, handleCompanyList}) {
         axios
         .post("http://127.0.0.1:8080/read") 
         .then((res) => { 
-            setRegister(res.data);          
+            setRegister(res.data);      
         })
         .catch((error) => {
             console.error(error);
@@ -41,10 +41,18 @@ function ModalCompanyName({setModalCompanyName, handleCompanyList}) {
                                                     i !== register.findIndex((el) => el === item)
                                                 );
                                                 setRegister(filtered);
-                                                // deleteUser(item._id);                                                                       
+
+                                                axios
+                                                .post("http://127.0.0.1:8080/del", {id: item._id}) 
+                                                .then((res) => {
+                                                                 
+                                                     })
+                                                    .catch((error) => {
+                                                        console.error(error);
+                                                    });                                                                      
                                             }}
                                             className="btn-delete">Usuń
-                                        </button></td></tr>
+                                        </button><button onClick={(e) => {handleAddCompanyName(item.companyName)}}>Dodaj</button></td></tr>
                                 )      
                             })}    
                     </tbody>

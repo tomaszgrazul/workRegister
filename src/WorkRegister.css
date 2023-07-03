@@ -40,3 +40,8 @@ button:hover {
     width: 170px;
     display: inline-block;
 }
+
+.error {
+    color: red;
+    margin: 0 0 10px 0;
+}

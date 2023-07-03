@@ -10,7 +10,7 @@ module.exports = {
         newCompany
         .save()
         .then(() => {
-            res.json(newCompany);
+            res.json({ save: true });
         })
         .catch((err) => {
             return res.json({ error: 'Get company error' });
@@ -35,8 +35,8 @@ module.exports = {
         // .findById(req.body.id)
         .find(req.body)
         .lean()
-        .then((user) => {
-            res.json(user);
+        .then(() => {
+            res.json({ read: true });
         })
         .catch((err) => {
             res.json({ error: 'Read company error' });
