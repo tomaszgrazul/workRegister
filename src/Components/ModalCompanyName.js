@@ -5,7 +5,11 @@ import { useState, useEffect } from "react";
 function ModalCompanyName({setModalCompanyName, handleAddCompanyName}) {
 
     const [register, setRegister] = useState([]);
+    const [isChecked, setIsChecked] = useState(false)
 
+    const checkHandler = () => {
+        setIsChecked(!isChecked)
+      }
 
     const readCompanyList = () => {
 
@@ -28,13 +32,19 @@ function ModalCompanyName({setModalCompanyName, handleAddCompanyName}) {
 
     return (
             <div className="modalCompanyName">
-                <h3>Lista firm</h3>
+                <div className='topModal'>
+                    <h3>Lista firm</h3>
+                    <div>
+                        <p className='ex-modal' onClick={() => setModalCompanyName(false)}>X</p>
+                    </div>
+                    <p>The checkbox is {isChecked ? "checked" : "unchecked"}</p>
+                </div>
                 <table>
                     <tbody>
-                        <tr><th className="index">L.P.</th><th className="name">Firma</th><th className="action">Akcja</th></tr>
+                        <tr><th></th><th className="name">Firma</th><th className="action">Czynność</th></tr>
                         {register.map((item, i) => {
                                 return (
-                                    <tr key={i}><td className="index">{i}</td><td className="name">{item.companyName}</td><td className="action">
+                                    <tr key={i}><td><input type="checkbox" className='checkbox' checked={isChecked} onChange={(e) => {handleAddCompanyName(item.companyName)}}/></td><td className="name">{item.companyName}</td><td className="action">
                                         <button onClick={() => {
 
                                                 var filtered = register.filter((el, i) =>
@@ -52,13 +62,13 @@ function ModalCompanyName({setModalCompanyName, handleAddCompanyName}) {
                                                     });                                                                      
                                             }}
                                             className="btn-delete">Usuń
-                                        </button><button onClick={(e) => {handleAddCompanyName(item.companyName)}}>Dodaj</button></td></tr>
+                                        {/* </button><button onClick={(e) => {handleAddCompanyName(item.companyName)}}>Wybierz</button></td></tr> */}
+                                        </button></td></tr>
                                 )      
                             })}    
                     </tbody>
                 </table>
-                {/* <button className="btn-modal" onClick={()=> readCompanyList()} >Dodaj</button> */}
-                <button className="btn-modal" onClick={() => setModalCompanyName(false)} >Anuluj</button>
+                {/* <button className="btn-modal" onClick={() => setModalCompanyName(false)} >Anuluj</button> */}
             </div>
         )
 }

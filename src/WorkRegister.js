@@ -32,7 +32,7 @@ const WorkRegister = () => {
     }
 
     const handleAddCompanyName = addCompanyName => {
-        console.log('handleAdd', addCompanyName);
+        
         setCompanyName(addCompanyName);
     }
 
@@ -112,7 +112,7 @@ const WorkRegister = () => {
 
                 <div>
                     <div className="label">
-                        <label htmlFor="nazwaBiura">Nazwa buira</label>
+                        <label htmlFor="nazwaBiura">Nazwa biura</label>
                     </div>  
                     <input type="text" placeholder="" name="nazwaBiura" />
                     <button>Wybierz</button>
@@ -182,7 +182,7 @@ const WorkRegister = () => {
                 
 
             </form>
-            {openModalCompanyName && <ModalCompanyName setModalCompanyName={setOpenModalCompanyName} handleCompanyList={handleCompanyList} handleAddCompanyName={handleAddCompanyName}/>}
+            {openModalCompanyName && <ModalCompanyName setModalCompanyName={setOpenModalCompanyName} handleAddCompanyName={handleAddCompanyName}/>}
         </div>
 
     )
