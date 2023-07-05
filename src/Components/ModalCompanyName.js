@@ -5,10 +5,16 @@ import { useState, useEffect } from "react";
 function ModalCompanyName({setModalCompanyName, handleAddCompanyName}) {
 
     const [register, setRegister] = useState([]);
-    const [isChecked, setIsChecked] = useState(false)
+    const [registerIsChecked, setRegisterIsChecked] = useState([1][2]);
+    const [isChecked, setIsChecked] = useState([false])
 
-    const checkHandler = () => {
+    const checkHandler = (i) => {
         setIsChecked(!isChecked)
+        // console.log(`i${i}=`, isChecked);
+        // const copy = [...registerIsChecked];
+        // const copy = [0][1];
+        // setRegisterIsChecked(copy);
+        console.log("ala=", registerIsChecked);
       }
 
     const readCompanyList = () => {
@@ -37,14 +43,14 @@ function ModalCompanyName({setModalCompanyName, handleAddCompanyName}) {
                     <div>
                         <p className='ex-modal' onClick={() => setModalCompanyName(false)}>X</p>
                     </div>
-                    <p>The checkbox is {isChecked ? "checked" : "unchecked"}</p>
+                    <p>ala{registerIsChecked}</p>
                 </div>
                 <table>
                     <tbody>
                         <tr><th></th><th className="name">Firma</th><th className="action">Czynność</th></tr>
                         {register.map((item, i) => {
                                 return (
-                                    <tr key={i}><td><input type="checkbox" className='checkbox' checked={isChecked} onChange={(e) => {handleAddCompanyName(item.companyName)}}/></td><td className="name">{item.companyName}</td><td className="action">
+                                    <tr key={i}><td><input type="checkbox" className='checkbox' onChange={() => {handleAddCompanyName(item.companyName, isChecked)}} onClick={() => {checkHandler(i)}}/></td><td className="name">{item.companyName}</td><td className="action">
                                         <button onClick={() => {
 
                                                 var filtered = register.filter((el, i) =>

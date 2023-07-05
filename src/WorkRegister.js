@@ -31,9 +31,9 @@ const WorkRegister = () => {
         setCompanyName(e.target.value);
     }
 
-    const handleAddCompanyName = addCompanyName => {
+    const handleAddCompanyName = (addCompanyName, isChecked) => {
         
-        setCompanyName(addCompanyName);
+        isChecked? setCompanyName(addCompanyName) : setCompanyName('');
     }
 
     const addCompany = () => {
