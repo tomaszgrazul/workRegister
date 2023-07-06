@@ -5,16 +5,18 @@ import { useState, useEffect } from "react";
 function ModalCompanyName({setModalCompanyName, handleAddCompanyName}) {
 
     const [register, setRegister] = useState([]);
-    const [registerIsChecked, setRegisterIsChecked] = useState([1][2]);
-    const [isChecked, setIsChecked] = useState([false])
+    const [registerIsChecked, setRegisterIsChecked] = useState([]);
+    const [isChecked, setIsChecked] = useState(new Array(register.length).fill(false));
 
     const checkHandler = (i) => {
-        setIsChecked(!isChecked)
-        // console.log(`i${i}=`, isChecked);
-        // const copy = [...registerIsChecked];
-        // const copy = [0][1];
-        // setRegisterIsChecked(copy);
-        console.log("ala=", registerIsChecked);
+        setIsChecked(!isChecked[i]);
+        // setRegisterIsChecked(registerIsChecked.concat([i,isChecked]));
+        setRegisterIsChecked(registerIsChecked.concat(isChecked[i]));
+        if(registerIsChecked[i] && registerIsChecked[i+1]) {
+            // registerIsChecked[i] = 'false';
+            console.log('ok');
+        }
+        console.log(`uuu=${i}`, isChecked[i]); 
       }
 
     const readCompanyList = () => {
@@ -34,6 +36,14 @@ function ModalCompanyName({setModalCompanyName, handleAddCompanyName}) {
         readCompanyList();  
     }, []);
 
+
+    useEffect(() => {
+        
+        console.log("ala=", isChecked); 
+        console.log(register.length);
+    }, []);
+
+
     
 
     return (
@@ -41,16 +51,21 @@ function ModalCompanyName({setModalCompanyName, handleAddCompanyName}) {
                 <div className='topModal'>
                     <h3>Lista firm</h3>
                     <div>
-                        <p className='ex-modal' onClick={() => setModalCompanyName(false)}>X</p>
+                        <p className='ex-modal' onClick={() => {setModalCompanyName(false); setRegisterIsChecked([]);}}>X</p>
                     </div>
-                    <p>ala{registerIsChecked}</p>
+                    {/* <p>ala{registerIsChecked}</p> */}
                 </div>
                 <table>
                     <tbody>
                         <tr><th></th><th className="name">Firma</th><th className="action">Czynność</th></tr>
                         {register.map((item, i) => {
                                 return (
-                                    <tr key={i}><td><input type="checkbox" className='checkbox' onChange={() => {handleAddCompanyName(item.companyName, isChecked)}} onClick={() => {checkHandler(i)}}/></td><td className="name">{item.companyName}</td><td className="action">
+                                    <tr key={i}><td><input type="checkbox" className='checkbox' checked={isChecked[i]}
+                                        onChange={() => {
+                                            handleAddCompanyName(item.companyName, isChecked); 
+                                            checkHandler(i);
+                                        }} 
+                                        /></td><td className="name">{item.companyName}</td><td className="action">
                                         <button onClick={() => {
 
                                                 var filtered = register.filter((el, i) =>

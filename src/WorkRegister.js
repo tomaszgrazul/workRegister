@@ -33,7 +33,7 @@ const WorkRegister = () => {
 
     const handleAddCompanyName = (addCompanyName, isChecked) => {
         
-        isChecked? setCompanyName(addCompanyName) : setCompanyName('');
+        !isChecked? setCompanyName(addCompanyName) : setCompanyName('');
     }
 
     const addCompany = () => {
