@@ -5,6 +5,7 @@
     top: 10%;
     left: 50%;
     background-color: rgb(221, 175, 175);
+    overflow-y: auto;
 }
 
 .topModal {

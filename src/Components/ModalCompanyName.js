@@ -5,18 +5,30 @@ import { useState, useEffect } from "react";
 function ModalCompanyName({setModalCompanyName, handleAddCompanyName}) {
 
     const [register, setRegister] = useState([]);
-    const [registerIsChecked, setRegisterIsChecked] = useState([]);
-    const [isChecked, setIsChecked] = useState(new Array(register.length).fill(false));
+    const [numberChecked, setNumberChecked] = useState();
+    // const [registerIsChecked, setRegisterIsChecked] = useState([]);
+    // const [isChecked, setIsChecked] = useState(new Array(register.length).fill(false));
+    const [isChecked, setIsChecked] = useState([false, false, false, false, false])
+
+    // const checkHandler = (i) => {
+    //     setIsChecked(!isChecked[i]);
+    //     // setRegisterIsChecked(registerIsChecked.concat([i,isChecked]));
+    //     setRegisterIsChecked(registerIsChecked.concat(isChecked[i]));
+    //     if(registerIsChecked[i] && registerIsChecked[i+1]) {
+    //         // registerIsChecked[i] = 'false';
+    //         console.log('ok');
+    //     }
+    //     console.log(`uuu=${i}`, isChecked[i]); 
+    //   }
 
     const checkHandler = (i) => {
-        setIsChecked(!isChecked[i]);
-        // setRegisterIsChecked(registerIsChecked.concat([i,isChecked]));
-        setRegisterIsChecked(registerIsChecked.concat(isChecked[i]));
-        if(registerIsChecked[i] && registerIsChecked[i+1]) {
-            // registerIsChecked[i] = 'false';
-            console.log('ok');
-        }
-        console.log(`uuu=${i}`, isChecked[i]); 
+        setIsChecked(isChecked.map(el => {
+            if( el === i) {
+                return el = !isChecked;
+            }
+            return isChecked;
+        }));
+
       }
 
     const readCompanyList = () => {
@@ -24,11 +36,11 @@ function ModalCompanyName({setModalCompanyName, handleAddCompanyName}) {
         axios
         .post("http://127.0.0.1:8080/read") 
         .then((res) => { 
-            setRegister(res.data);      
+            setRegister(res.data);            
         })
         .catch((error) => {
             console.error(error);
-        });
+        });        
     }
 
     useEffect(() => {
@@ -39,9 +51,9 @@ function ModalCompanyName({setModalCompanyName, handleAddCompanyName}) {
 
     useEffect(() => {
         
-        console.log("ala=", isChecked); 
-        console.log(register.length);
-    }, []);
+        console.log("checked=", isChecked); 
+        // console.log("numberChecked=", numberChecked); 
+    }, [isChecked]);
 
 
     
@@ -51,16 +63,17 @@ function ModalCompanyName({setModalCompanyName, handleAddCompanyName}) {
                 <div className='topModal'>
                     <h3>Lista firm</h3>
                     <div>
-                        <p className='ex-modal' onClick={() => {setModalCompanyName(false); setRegisterIsChecked([]);}}>X</p>
+                        {/* <p className='ex-modal' onClick={() => {setModalCompanyName(false); setRegisterIsChecked([]);}}>X</p> */}
+                        <p className='ex-modal' onClick={() => {setModalCompanyName(false)}}>X</p>
                     </div>
-                    {/* <p>ala{registerIsChecked}</p> */}
+                    {/* <p>ala{register.length}</p> */}
                 </div>
                 <table>
                     <tbody>
                         <tr><th></th><th className="name">Firma</th><th className="action">Czynność</th></tr>
                         {register.map((item, i) => {
                                 return (
-                                    <tr key={i}><td><input type="checkbox" className='checkbox' checked={isChecked[i]}
+                                    <tr key={i}><td><input type="checkbox" className='checkbox' 
                                         onChange={() => {
                                             handleAddCompanyName(item.companyName, isChecked); 
                                             checkHandler(i);
