@@ -41,5 +41,19 @@ module.exports = {
         .catch((err) => {
             res.json({ error: 'Read company error' });
         }); 
+    },
+
+    readCount: (req, res) => {
+
+        Company
+        .count()
+        .then(count => {
+            res.json(count);
+            // console.log("liczba dokumentów serwer", count);
+        })
+        .catch((err) => {
+            res.json({ error: 'Read count error' });
+        }); 
     }
+
 };

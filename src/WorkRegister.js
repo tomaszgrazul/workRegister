@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect} from "react";
 import './WorkRegister.css';
 import axios from "axios";
 import ModalCompanyName from "./Components/ModalCompanyName";
@@ -6,25 +6,13 @@ import ModalCompanyName from "./Components/ModalCompanyName";
 
 const WorkRegister = () => {
 
-    // const [formData, setFormData] = useState({
-    //     companyName: ''
-    // });
-
-    const [openModalCompanyName, setOpenModalCompanyName] = useState(false);
+     const [openModalCompanyName, setOpenModalCompanyName] = useState(false);
     const [companyName, setCompanyName] = useState('');
     const [errors, setErrors] = useState({
         companyName: ''
     });
+    const [companyNumber, setCompanyNumber] = useState();
 
-    // const handleInputChange = (e) => {
-    //     const target = e.target;
-    //     const name = target.name;
-
-    //     setFormData ({
-    //         ...formData,
-    //         [name]: target.value
-    //     });
-    // };
 
     function handleCompanyList(e) {
         
@@ -35,6 +23,27 @@ const WorkRegister = () => {
         
         !isChecked? setCompanyName(addCompanyName) : setCompanyName('');
     }
+
+
+    const readCompanyNumber = () => {
+
+        axios
+        .post("http://127.0.0.1:8080/readCount") 
+        .then((res) => { 
+            console.log("liczba dokumentów api", res.data); 
+            setCompanyNumber(res.data);       
+        })
+        .catch((error) => {
+            console.error(error);
+        }); 
+    }
+
+
+    useEffect(() => {
+
+        readCompanyNumber(); 
+        console.log("liczba dokumentów api qqq", companyNumber);
+    }, []);
 
     const addCompany = () => {
        
@@ -182,7 +191,7 @@ const WorkRegister = () => {
                 
 
             </form>
-            {openModalCompanyName && <ModalCompanyName setModalCompanyName={setOpenModalCompanyName} handleAddCompanyName={handleAddCompanyName}/>}
+            {openModalCompanyName && <ModalCompanyName setModalCompanyName={setOpenModalCompanyName} handleAddCompanyName={handleAddCompanyName} companyNumber={companyNumber}/>}
         </div>
 
     )

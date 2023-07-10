@@ -9,4 +9,6 @@ router.post('/del', CompanyListController.del);
 
 router.post('/read', CompanyListController.read);
 
+router.post('/readCount', CompanyListController.readCount);
+
 module.exports = router;
