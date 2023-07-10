@@ -12,6 +12,7 @@ const WorkRegister = () => {
         companyName: ''
     });
     const [companyNumber, setCompanyNumber] = useState();
+    const [newRegister, setNewRegister] = useState();
 
 
     function handleCompanyList(e) {
@@ -19,9 +20,10 @@ const WorkRegister = () => {
         setCompanyName(e.target.value);
     }
 
-    const handleAddCompanyName = (addCompanyName, isChecked) => {
+    const handleAddCompanyName = (addCompanyName, isChecked, registerLength) => {
         
         !isChecked? setCompanyName(addCompanyName) : setCompanyName('');
+        setNewRegister(registerLength);
     }
 
 
@@ -30,7 +32,6 @@ const WorkRegister = () => {
         axios
         .post("http://127.0.0.1:8080/readCount") 
         .then((res) => { 
-            console.log("liczba dokumentów api", res.data); 
             setCompanyNumber(res.data);       
         })
         .catch((error) => {
@@ -38,12 +39,12 @@ const WorkRegister = () => {
         }); 
     }
 
-
     useEffect(() => {
 
         readCompanyNumber(); 
-        console.log("liczba dokumentów api qqq", companyNumber);
-    }, []);
+        console.log("newregister",newRegister )
+    }, [newRegister]);
+
 
     const addCompany = () => {
        

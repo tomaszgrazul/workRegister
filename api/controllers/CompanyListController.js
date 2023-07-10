@@ -35,8 +35,8 @@ module.exports = {
         // .findById(req.body.id)
         .find(req.body)
         .lean()
-        .then(() => {
-            res.json({ read: true });
+        .then(data => {
+            res.json(data);
         })
         .catch((err) => {
             res.json({ error: 'Read company error' });

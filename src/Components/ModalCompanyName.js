@@ -2,11 +2,13 @@ import './ModalCompanyName.css'
 import axios from "axios";
 import { useState, useEffect } from "react";
 
-function ModalCompanyName({setModalCompanyName, handleAddCompanyName, companyNumber}) {
+function ModalCompanyName({setModalCompanyName, handleAddCompanyName, companyNumber, registerChange}) {
 
  
     const [register, setRegister] = useState([]);
     const [isChecked, setIsChecked] = useState(new Array(companyNumber).fill(false));
+
+    let registerLength = register.length; 
 
     const checkHandler = (i) => {
         setIsChecked(isChecked.map((item, index) => {
@@ -23,7 +25,7 @@ function ModalCompanyName({setModalCompanyName, handleAddCompanyName, companyNum
         axios
         .post("http://127.0.0.1:8080/read") 
         .then((res) => { 
-            setRegister(res.data);          
+            setRegister(res.data);       
         })
         .catch((error) => {
             console.error(error);
@@ -35,11 +37,11 @@ function ModalCompanyName({setModalCompanyName, handleAddCompanyName, companyNum
         readCompanyList();  
     }, []);
 
-    // useEffect(() => {
+    useEffect(() => {
         
-    //     console.log("checked=", isChecked); 
-    //     console.log("register=", register); 
-    // }, [isChecked, register]);
+        console.log("checked=", isChecked); 
+        console.log("register=", registerLength); 
+    }, [isChecked, register]);
 
 
     
@@ -61,7 +63,7 @@ function ModalCompanyName({setModalCompanyName, handleAddCompanyName, companyNum
                                 return (
                                     <tr key={i}><td><input type="checkbox" className='checkbox' 
                                         onChange={() => {
-                                            handleAddCompanyName(item.companyName, isChecked); 
+                                            handleAddCompanyName(item.companyName, isChecked, registerLength); 
                                             checkHandler(i);
                                         }} 
                                         /></td><td className="name">{item.companyName}</td><td className="action">
