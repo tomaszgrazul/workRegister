@@ -12,7 +12,7 @@ const WorkRegister = () => {
         companyName: ''
     });
     const [companyNumber, setCompanyNumber] = useState();
-    const [newRegister, setNewRegister] = useState();
+
 
 
     function handleCompanyList(e) {
@@ -20,12 +20,16 @@ const WorkRegister = () => {
         setCompanyName(e.target.value);
     }
 
-    const handleAddCompanyName = (addCompanyName, isChecked, registerLength) => {
-        
-        !isChecked? setCompanyName(addCompanyName) : setCompanyName('');
-        setNewRegister(registerLength);
+    const handleAddCompanyName = (addCompanyName, isChecked, i) => {
+                console.log(`isChecked z work ${i}`, isChecked[i]);
+
+        !isChecked[i]? setCompanyName(addCompanyName) : setCompanyName('');    
     }
 
+    const handleReadCompanyNumber = () => {
+
+        readCompanyNumber(); 
+    }
 
     const readCompanyNumber = () => {
 
@@ -42,8 +46,8 @@ const WorkRegister = () => {
     useEffect(() => {
 
         readCompanyNumber(); 
-        console.log("newregister",newRegister )
-    }, [newRegister]);
+        // console.log("companyNumber",companyNumber );
+    }, []);
 
 
     const addCompany = () => {
@@ -68,7 +72,7 @@ const WorkRegister = () => {
         axios
         .post("http://127.0.0.1:8080/add", newCompany)
         .then((res) => {
-            
+            readCompanyNumber(); 
          })
         .catch((error) => {
             console.error(error);
@@ -192,7 +196,7 @@ const WorkRegister = () => {
                 
 
             </form>
-            {openModalCompanyName && <ModalCompanyName setModalCompanyName={setOpenModalCompanyName} handleAddCompanyName={handleAddCompanyName} companyNumber={companyNumber}/>}
+            {openModalCompanyName && <ModalCompanyName setModalCompanyName={setOpenModalCompanyName} handleAddCompanyName={handleAddCompanyName} companyNumber={companyNumber} handleReadCompanyNumber={handleReadCompanyNumber}/>}
         </div>
 
     )

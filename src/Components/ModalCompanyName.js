@@ -2,13 +2,11 @@ import './ModalCompanyName.css'
 import axios from "axios";
 import { useState, useEffect } from "react";
 
-function ModalCompanyName({setModalCompanyName, handleAddCompanyName, companyNumber, registerChange}) {
+function ModalCompanyName({setModalCompanyName, handleAddCompanyName, companyNumber, handleReadCompanyNumber}) {
 
  
     const [register, setRegister] = useState([]);
     const [isChecked, setIsChecked] = useState(new Array(companyNumber).fill(false));
-
-    let registerLength = register.length; 
 
     const checkHandler = (i) => {
         setIsChecked(isChecked.map((item, index) => {
@@ -39,9 +37,10 @@ function ModalCompanyName({setModalCompanyName, handleAddCompanyName, companyNum
 
     useEffect(() => {
         
-        console.log("checked=", isChecked); 
-        console.log("register=", registerLength); 
-    }, [isChecked, register]);
+        console.log("isChecked=", isChecked); 
+        // console.log("registerLength=", registerLength); 
+        // console.log("companyNumber z modala=", companyNumber); 
+    }, [isChecked, companyNumber]);
 
 
     
@@ -63,7 +62,7 @@ function ModalCompanyName({setModalCompanyName, handleAddCompanyName, companyNum
                                 return (
                                     <tr key={i}><td><input type="checkbox" className='checkbox' 
                                         onChange={() => {
-                                            handleAddCompanyName(item.companyName, isChecked, registerLength); 
+                                            handleAddCompanyName(item.companyName, isChecked, i); 
                                             checkHandler(i);
                                         }} 
                                         /></td><td className="name">{item.companyName}</td><td className="action">
@@ -73,15 +72,16 @@ function ModalCompanyName({setModalCompanyName, handleAddCompanyName, companyNum
                                                     i !== register.findIndex((el) => el === item)
                                                 );
                                                 setRegister(filtered);
+                                                
 
                                                 axios
                                                 .post("http://127.0.0.1:8080/del", {id: item._id}) 
                                                 .then((res) => {
-                                                                 
+                                                    handleReadCompanyNumber();
                                                      })
-                                                    .catch((error) => {
-                                                        console.error(error);
-                                                    });                                                                      
+                                                .catch((error) => {
+                                                    console.error(error);
+                                                });       
                                             }}
                                             className="btn-delete">Usuń
                                         {/* </button><button onClick={(e) => {handleAddCompanyName(item.companyName)}}>Wybierz</button></td></tr> */}
