@@ -15,7 +15,6 @@ function ModalCompanyName({setModalCompanyName, handleAddCompanyName, companyNum
             } else 
                 return item = item;
         }));
-
       }
 
     const readCompanyList = () => {
@@ -35,12 +34,12 @@ function ModalCompanyName({setModalCompanyName, handleAddCompanyName, companyNum
         readCompanyList();  
     }, []);
 
-    useEffect(() => {
+    // useEffect(() => {
         
-        console.log("isChecked=", isChecked); 
-        // console.log("registerLength=", registerLength); 
-        // console.log("companyNumber z modala=", companyNumber); 
-    }, [isChecked, companyNumber]);
+    //     console.log("isChecked=", isChecked); 
+    //     // console.log("registerLength=", registerLength); 
+    //     // console.log("companyNumber z modala=", companyNumber); 
+    // }, [isChecked, companyNumber]);
 
 
     
@@ -60,10 +59,15 @@ function ModalCompanyName({setModalCompanyName, handleAddCompanyName, companyNum
                         <tr><th></th><th className="name">Firma</th><th className="action">Czynność</th></tr>
                         {register.map((item, i) => {
                                 return (
-                                    <tr key={i}><td><input type="checkbox" className='checkbox' 
+                                    <tr key={i}><td><input type="checkbox" className="checkbox" checked={isChecked[i]}
                                         onChange={() => {
+                                            isChecked.map((item, index) => {
+                                                if( item ) {
+                                                    isChecked[i] = true;
+                                                } 
+                                                return checkHandler(i);
+                                            })
                                             handleAddCompanyName(item.companyName, isChecked, i); 
-                                            checkHandler(i);
                                         }} 
                                         /></td><td className="name">{item.companyName}</td><td className="action">
                                         <button onClick={() => {

@@ -21,8 +21,7 @@ const WorkRegister = () => {
     }
 
     const handleAddCompanyName = (addCompanyName, isChecked, i) => {
-                console.log(`isChecked z work ${i}`, isChecked[i]);
-
+                
         !isChecked[i]? setCompanyName(addCompanyName) : setCompanyName('');    
     }
 
