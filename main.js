@@ -15,7 +15,7 @@ app.use(cors());
 
 
 
-const companyRouter = require('./api/routes/CompanyRoutes');
+const companyRouter = require('./api/routes/companyRoutes');
 app.use('/', companyRouter);
 
 

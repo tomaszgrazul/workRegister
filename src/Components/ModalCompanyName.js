@@ -1,4 +1,4 @@
-import './ModalCompanyName.css'
+import './modalCompanyName.css'
 import axios from "axios";
 import { useState, useEffect } from "react";
 
@@ -20,7 +20,8 @@ function ModalCompanyName({setModalCompanyName, handleAddCompanyName, companyNum
     const readCompanyList = () => {
 
         axios
-        .post("http://127.0.0.1:8080/read") 
+        // .post("http://127.0.0.1:8080/index") 
+        .get("http://127.0.0.1:8080/index") 
         .then((res) => { 
             setRegister(res.data);       
         })
@@ -79,7 +80,8 @@ function ModalCompanyName({setModalCompanyName, handleAddCompanyName, companyNum
                                                 
 
                                                 axios
-                                                .post("http://127.0.0.1:8080/del", {id: item._id}) 
+                                                // .post("http://127.0.0.1:8080/delete", {id: item._id}) 
+                                                .delete(`http://127.0.0.1:8080/delete/${item._id}`) 
                                                 .then((res) => {
                                                     handleReadCompanyNumber();
                                                      })

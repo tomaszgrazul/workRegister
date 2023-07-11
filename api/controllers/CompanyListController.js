@@ -3,7 +3,7 @@ const Company = require('../models/CompanyListModel');
 
 module.exports = {
   
-    add: (req, res) => {
+    create: (req, res) => {
            
         let newCompany = new Company(req.body);
         
@@ -17,10 +17,11 @@ module.exports = {
         });   
     },
 
-    del: (req, res) => {
+    delete: (req, res) => {
 
         Company
-        .findByIdAndDelete(req.body.id)
+        // .findByIdAndDelete(req.body.id) //dla post
+        .findByIdAndDelete(req.params.id)
         .then(()=>{
             res.json({ delete: true});
         })
@@ -29,11 +30,11 @@ module.exports = {
         });
     },
 
-    read: (req, res) => {
+    index: (req, res) => {
 
         Company
-        // .findById(req.body.id)
-        .find(req.body)
+        // .find(req.body)
+        .find(req.params)
         .lean()
         .then(data => {
             res.json(data);

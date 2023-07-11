@@ -1,7 +1,7 @@
 import { useState, useEffect} from "react";
 import './WorkRegister.css';
 import axios from "axios";
-import ModalCompanyName from "./Components/ModalCompanyName";
+import ModalCompanyName from "./components/modalCompanyName";
 
 
 const WorkRegister = () => {
@@ -33,7 +33,8 @@ const WorkRegister = () => {
     const readCompanyNumber = () => {
 
         axios
-        .post("http://127.0.0.1:8080/readCount") 
+        // .post("http://127.0.0.1:8080/readCount") 
+        .get("http://127.0.0.1:8080/readCount")
         .then((res) => { 
             setCompanyNumber(res.data);       
         })
@@ -69,7 +70,7 @@ const WorkRegister = () => {
         setCompanyName('');
 
         axios
-        .post("http://127.0.0.1:8080/add", newCompany)
+        .post("http://127.0.0.1:8080/create", newCompany)
         .then((res) => {
             readCompanyNumber(); 
          })
